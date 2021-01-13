@@ -1,4 +1,5 @@
 import IUsersRepository from '@modules/users/interfaces/IUsersRepository';
+import AppError from '@shared/error/AppError';
 import { inject, injectable } from 'tsyringe';
 import UserEntity from '../typeorm/entities/UserEntity';
 
@@ -34,21 +35,21 @@ export default class UpdateUserService {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
-      throw new Error('O Usuário não existe');
+      throw new AppError('O Usuário não existe');
     }
 
     if ((await this.usersRepository.findByPhoneNumber(phone_number)) !== user) {
-      throw new Error(
+      throw new AppError(
         'O número de celular já está sendo utilizado por outro usuário.',
       );
     }
 
     if ((await this.usersRepository.findByEmail(email)) !== user) {
-      throw new Error('O Email já está sendo utilizado por outro usuário.');
+      throw new AppError('O Email já está sendo utilizado por outro usuário.');
     }
 
     if ((await this.usersRepository.findByUsername(username)) !== user) {
-      throw new Error(
+      throw new AppError(
         'O nome de usuário já está sendo utilizado por outro usuário.',
       );
     }

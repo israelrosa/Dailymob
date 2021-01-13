@@ -1,4 +1,5 @@
 import IUsersRepository from '@modules/users/interfaces/IUsersRepository';
+import AppError from '@shared/error/AppError';
 import { inject, injectable } from 'tsyringe';
 import UserEntity from '../typeorm/entities/UserEntity';
 
@@ -16,6 +17,6 @@ export default class ShowAllUsersService {
     if (result.length > 0) {
       return result;
     }
-    throw new Error('Não foi encontrado usuários.');
+    throw new AppError('Não foram encontrados resultados.');
   }
 }

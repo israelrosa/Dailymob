@@ -1,11 +1,8 @@
 import { Field, InputType } from 'type-graphql';
-import UserEntity from '../entities/UserEntity';
+import UserEntity from '../../typeorm/entities/UserEntity';
 
 @InputType()
-export default class UpdateUserInterface implements Partial<UserEntity> {
-  @Field()
-  id: string;
-
+export default class NewUserInterface implements Partial<UserEntity> {
   @Field()
   username: string;
 
@@ -24,6 +21,6 @@ export default class UpdateUserInterface implements Partial<UserEntity> {
   @Field()
   phone_number: string;
 
-  @Field()
+  @Field({ nullable: true })
   avatar: string;
 }

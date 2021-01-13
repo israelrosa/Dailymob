@@ -7,7 +7,7 @@ import CreateUserService from '../../services/CreateUserService';
 import DeleteUserService from '../../services/DeleteUserService';
 import ShowAllUsersService from '../../services/ShowAllUsersService';
 import UpdateUserService from '../../services/UpdateUserService';
-import UserEntity from '../entities/UserEntity';
+import UserEntity from '../../typeorm/entities/UserEntity';
 import CreateSessionInterface from '../inputs/CreateSessionInterface';
 import NewUserInterface from '../inputs/NewUserInterface';
 import UpdateUserInterface from '../inputs/UpdateUserInterface';

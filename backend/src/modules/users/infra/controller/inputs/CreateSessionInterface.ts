@@ -1,5 +1,5 @@
 import { Field, InputType } from 'type-graphql';
-import UserEntity from '../entities/UserEntity';
+import UserEntity from '../../typeorm/entities/UserEntity';
 
 @InputType()
 export default class CreateSessionInterface implements Partial<UserEntity> {

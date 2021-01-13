@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import express from 'express';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloError, ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import path from 'path';
 import { createConnection } from 'typeorm';
@@ -8,6 +8,7 @@ import '../../containers';
 import authChecker from '@shared/auth/authChecker';
 import UserContext from '@shared/auth/UserContext';
 import { verify } from 'jsonwebtoken';
+import { GraphQLFormattedError } from 'graphql';
 import authConfig from '../../../config/auth';
 
 interface ITokenPayload {
@@ -24,7 +25,7 @@ interface ITokenPayload {
     resolvers: [
       path.resolve(
         __dirname,
-        '../../../modules/**/**/infra/typeorm/resolvers/*.ts',
+        '../../../modules/**/**/infra/controller/resolvers/*.ts',
       ),
     ],
     authChecker,
@@ -42,6 +43,15 @@ interface ITokenPayload {
         return { id: sub, token };
       }
       return { id: '', token: '' };
+    },
+    formatError: (err): GraphQLFormattedError => {
+      if (err.extensions) {
+        return {
+          message: err.message,
+          extensions: { code: err.extensions.code },
+        };
+      }
+      throw new ApolloError(err.message);
     },
     playground: true,
   });

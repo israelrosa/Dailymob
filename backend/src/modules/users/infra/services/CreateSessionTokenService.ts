@@ -2,6 +2,7 @@ import auth from '@config/auth';
 import IResponseToken from '@modules/users/interfaces/IResponseToken';
 import IUsersRepository from '@modules/users/interfaces/IUsersRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import AppError from '@shared/error/AppError';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 import UserEntity from '../typeorm/entities/UserEntity';
@@ -35,7 +36,7 @@ export default class CreateSessionToken {
 
         return { user, token };
       }
-      throw new Error('O usuário não existe.');
+      throw new AppError('O usuário não existe.');
     } else if (phone_number) {
       const user = await this.usersRepository.findByPhoneNumber(phone_number);
 
@@ -43,7 +44,7 @@ export default class CreateSessionToken {
         const token = await this.createToken(user, password);
         return { user, token };
       }
-      throw new Error('O usuário não existe.');
+      throw new AppError('O usuário não existe.');
     } else if (username) {
       const user = await this.usersRepository.findByUsername(username);
 
@@ -51,10 +52,10 @@ export default class CreateSessionToken {
         const token = await this.createToken(user, password);
         return { user, token };
       }
-      throw new Error('O usuário não existe.');
+      throw new AppError('O usuário não existe.');
     }
 
-    throw new Error('É necessário se identificar.');
+    throw new AppError('É necessário se identificar.');
   }
 
   private async createToken(
@@ -69,6 +70,6 @@ export default class CreateSessionToken {
 
       return token;
     }
-    throw new Error('Combinação Incorreta.');
+    throw new AppError('Combinação Incorreta.');
   }
 }

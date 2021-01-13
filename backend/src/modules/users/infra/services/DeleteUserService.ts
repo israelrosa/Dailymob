@@ -1,4 +1,5 @@
 import IUsersRepository from '@modules/users/interfaces/IUsersRepository';
+import AppError from '@shared/error/AppError';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
@@ -16,6 +17,6 @@ export default class DeleteUserService {
       return result;
     }
 
-    throw new Error('Não foi possível deletar o usuário.');
+    throw new AppError('Não foi possível deletar o usuário.');
   }
 }

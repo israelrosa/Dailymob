@@ -1,5 +1,6 @@
 import IUsersRepository from '@modules/users/interfaces/IUsersRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import AppError from '@shared/error/AppError';
 import { inject, injectable } from 'tsyringe';
 import UserEntity from '../typeorm/entities/UserEntity';
 import NewUserInterface from '../typeorm/inputs/NewUserInterface';
@@ -28,13 +29,13 @@ export default class CreateUserService {
     username,
   }: NewUserInterface): Promise<UserEntity> {
     if (await this.usersRepository.findByEmail(email)) {
-      throw new Error('O Email já está sendo utilizado.');
+      throw new AppError('O Email já está sendo utilizado.');
     }
     if (await this.usersRepository.findByUsername(username)) {
-      throw new Error('O nome de usuário já está sendo utilizado.');
+      throw new AppError('O nome de usuário já está sendo utilizado.');
     }
     if (await this.usersRepository.findByPhoneNumber(phone_number)) {
-      throw new Error(
+      throw new AppError(
         'O número de celular já está sendo utilizado por outro usuário.',
       );
     }
