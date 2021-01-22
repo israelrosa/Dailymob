@@ -1,5 +1,5 @@
 ## About
-This is a mobile app to rent vehicles and provide vehicles to rent, it will be make with a Rest API Apollo GraphQL, and for mobile, I will use React Native.
+This is a mobile app to rent vehicles and provide vehicles to rent, it will be make with Rest API Apollo GraphQL, and for mobile, I will use React Native.
 
 ## Frameworks and Libs
 - [Typescript](https://www.typescriptlang.org/)
