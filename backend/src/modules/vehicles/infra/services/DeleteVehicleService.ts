@@ -21,14 +21,10 @@ export default class DeleteVehicleService {
     if (vehicle.user_id !== user_id) {
       throw new AppError(
         'O usuário não tem permissão para deletar um veículo que não o pertence',
+        'UNAUTHORIZED',
       );
     }
     const data = await this.vehiclesRepository.delete(id);
-
-    if (data) {
-      return data;
-    }
-
-    throw new AppError('Não foi possível deletar o veículo.');
+    return data;
   }
 }

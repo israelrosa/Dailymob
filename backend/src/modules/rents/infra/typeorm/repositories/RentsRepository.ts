@@ -1,8 +1,11 @@
-import { ICreateRent } from '@modules/rents/interfaces/IRentsRepository';
+import IRentsRepository, {
+  CreateRentRepository,
+} from '@modules/rents/interfaces/IRentsRepository';
+import AppError from '@shared/error/AppError';
 import { getRepository, Repository } from 'typeorm';
 import RentEntity from '../entities/RentEntity';
 
-export default class RentsRepository {
+export default class RentsRepository implements IRentsRepository {
   ormRepository: Repository<RentEntity>;
 
   constructor() {
@@ -11,21 +14,19 @@ export default class RentsRepository {
 
   async create({
     initial_date,
-    pickup_location_id,
-    rent_type_id,
+    rent_status_id,
     return_date,
-    return_location_id,
-    user_id,
+    renter_id,
     vehicle_id,
-  }: ICreateRent): Promise<RentEntity> {
+    lessor_id,
+  }: CreateRentRepository): Promise<RentEntity> {
     const data = await this.ormRepository.create({
       initial_date,
-      pickup_location_id,
-      rent_type_id,
+      rent_status_id,
       return_date,
-      return_location_id,
-      user_id,
+      renter_id,
       vehicle_id,
+      lessor_id,
     });
 
     const result = await this.ormRepository.save(data);
@@ -33,10 +34,14 @@ export default class RentsRepository {
     return result;
   }
 
-  async delete(id: string): Promise<number | null | undefined> {
+  async delete(id: string): Promise<number> {
     const data = await this.ormRepository.delete(id);
 
-    return data.affected;
+    if (data.affected) {
+      return data.affected;
+    }
+
+    throw new AppError('Não foi possível deletar o aluguel.');
   }
 
   async findAll(): Promise<RentEntity[]> {
@@ -53,6 +58,12 @@ export default class RentsRepository {
 
   async update(rent: RentEntity): Promise<RentEntity> {
     const data = await this.ormRepository.save(rent);
+
+    return data;
+  }
+
+  async findByVehicleId(vehicle_id: string): Promise<RentEntity[]> {
+    const data = await this.ormRepository.find({ where: { vehicle_id } });
 
     return data;
   }

@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import IRentsRepository from '@modules/rents/interfaces/IRentsRepository';
 import AppError from '@shared/error/AppError';
 import { inject, injectable } from 'tsyringe';

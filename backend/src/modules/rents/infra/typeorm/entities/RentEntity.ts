@@ -1,5 +1,4 @@
-import LocationEntity from '@modules/locations/infra/typeorm/entities/LocationEntity';
-import RentTypeEntity from '@modules/rents/dependencies/rentTypes/infra/typeorm/entities/RentTypeEntity';
+import RentStatusEntity from '@modules/rents/dependencies/rentStatus/infra/typeorm/entities/RentStatusEntity';
 import UserEntity from '@modules/users/infra/typeorm/entities/UserEntity';
 import VehicleEntity from '@modules/vehicles/infra/typeorm/entities/VehicleEntity';
 import { Field, ObjectType } from 'type-graphql';
@@ -27,8 +26,16 @@ export default class RentEntity {
   return_date: Date;
 
   @Field()
+  @Column({ nullable: true })
+  devolution_date: Date;
+
+  @Field()
   @Column()
-  user_id: string;
+  lessor_id: string;
+
+  @Field()
+  @Column()
+  renter_id: string;
 
   @Field()
   @Column()
@@ -36,38 +43,25 @@ export default class RentEntity {
 
   @Field()
   @Column()
-  pickup_location_id: string;
+  rent_status_id: string;
 
-  @Field()
-  @Column()
-  return_location_id: string;
-
-  @Field()
-  @Column()
-  rent_type_id: string;
-
-  @Field()
+  @Field(() => UserEntity)
   @ManyToOne(() => UserEntity)
-  @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
+  @JoinColumn({ name: 'lessor_id' })
+  lessor: UserEntity;
 
-  @Field()
-  @ManyToOne(() => VehicleEntity)
+  @Field(() => UserEntity)
+  @ManyToOne(() => UserEntity)
+  @JoinColumn({ name: 'renter_id' })
+  renter: UserEntity;
+
+  @Field(() => VehicleEntity)
+  @ManyToOne(() => VehicleEntity, { eager: true })
   @JoinColumn({ name: 'vehicle_id' })
   vehicle: VehicleEntity;
 
-  @Field()
-  @ManyToOne(() => LocationEntity)
-  @JoinColumn({ name: 'pickup_location_id' })
-  pickup_location: LocationEntity;
-
-  @Field()
-  @ManyToOne(() => LocationEntity)
-  @JoinColumn({ name: 'return_location_id' })
-  return_location: LocationEntity;
-
-  @Field()
-  @ManyToOne(() => RentTypeEntity)
-  @JoinColumn({ name: 'rent_type_id' })
-  rent_type: RentTypeEntity;
+  @Field(() => RentStatusEntity)
+  @ManyToOne(() => RentStatusEntity, { eager: true })
+  @JoinColumn({ name: 'rent_status_id' })
+  rent_status: RentStatusEntity;
 }

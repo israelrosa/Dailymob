@@ -1,7 +1,9 @@
+import CreateLocationInput from '../infra/controller/inputs/CreateLocationInput';
 import LocationEntity from '../infra/typeorm/entities/LocationEntity';
-import CreateLocationInput from '../infra/typeorm/inputs/CreateLocationInput';
 
 export default interface ILocationsRepository {
   create(data: CreateLocationInput): Promise<LocationEntity>;
-  delete(id: string): Promise<number | null | undefined>;
+  delete(id: string): Promise<number>;
+  findById(id: string): Promise<LocationEntity | undefined>;
+  findAllUserLocations(user_id: string): Promise<LocationEntity[]>;
 }

@@ -21,14 +21,20 @@ export default class UpdateVehicleInput {
   weekly_value: number;
 
   @Field()
+  waiting_time: number;
+
+  @Field()
   monthly_value: number;
 
   @Field()
   category_id: string;
 
   @Field()
-  brand_id: string;
+  brand: string;
 
   @Field()
-  model_id: string;
+  model: string;
+
+  @Field()
+  location_id: string;
 }

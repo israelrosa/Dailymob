@@ -39,8 +39,8 @@ export default class CarsEntity {
   @Column()
   vehicle_id: string;
 
-  @Field()
-  @OneToOne(() => VehicleEntity)
+  @Field(() => VehicleEntity)
+  @OneToOne(() => VehicleEntity, vehicle => vehicle.car)
   @JoinColumn({ name: 'vehicle_id' })
   vehicle: VehicleEntity;
 }

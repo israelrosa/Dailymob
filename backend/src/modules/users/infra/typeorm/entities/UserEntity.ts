@@ -10,43 +10,43 @@ import {
 @ObjectType('User')
 @Entity('users')
 export default class UserEntity {
-  @Field(() => String)
+  @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Field(() => String)
+  @Field()
   @Column({ unique: true })
   username: string;
 
-  @Field(() => String)
+  @Field()
   @Column()
   firstname: string;
 
-  @Field(() => String)
+  @Field()
   @Column()
   lastname: string;
 
-  @Field(() => String)
+  @Field()
   @Column({ unique: true })
   email: string;
 
-  @Field(() => String)
+  @Field()
   @Column({ unique: true })
   phone_number: string;
 
-  @Field(() => String)
+  @Field()
   @Column()
   password: string;
 
-  @Field(() => String, { nullable: true })
+  @Field({ nullable: true })
   @Column({ nullable: true })
   avatar: string;
 
-  @Field(() => Date)
+  @Field()
   @CreateDateColumn()
   created_at: Date;
 
-  @Field(() => Date)
+  @Field()
   @UpdateDateColumn()
   updated_at: Date;
 }

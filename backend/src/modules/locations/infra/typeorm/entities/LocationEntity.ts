@@ -1,8 +1,10 @@
+import UserEntity from '@modules/users/infra/typeorm/entities/UserEntity';
 import { Field, ObjectType } from 'type-graphql';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -49,4 +51,12 @@ export default class LocationEntity {
   @Field()
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Field()
+  @Column()
+  user_id: string;
+
+  @Field(() => UserEntity)
+  @ManyToOne(() => UserEntity)
+  user: UserEntity;
 }

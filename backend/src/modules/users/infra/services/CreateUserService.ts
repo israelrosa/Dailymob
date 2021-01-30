@@ -3,7 +3,7 @@ import IHashProvider from '@modules/users/providers/HashProvider/models/IHashPro
 import AppError from '@shared/error/AppError';
 import { inject, injectable } from 'tsyringe';
 import UserEntity from '../typeorm/entities/UserEntity';
-import NewUserInterface from '../typeorm/inputs/NewUserInterface';
+import NewUserInterface from '../controller/inputs/NewUserInterface';
 
 @injectable()
 export default class CreateUserService {

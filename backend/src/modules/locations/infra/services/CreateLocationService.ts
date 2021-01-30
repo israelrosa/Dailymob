@@ -1,7 +1,8 @@
-import ILocationsRepository from '@modules/locations/interfaces/ILocationsRepository';
+import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
+import ILocationsRepository from '@modules/locations/interfaces/ILocationsRepository';
+import CreateLocationInput from '../controller/inputs/CreateLocationInput';
 import LocationEntity from '../typeorm/entities/LocationEntity';
-import CreateLocationInput from '../typeorm/inputs/CreateLocationInput';
 
 @injectable()
 export default class CreateLocationService {
@@ -21,8 +22,10 @@ export default class CreateLocationService {
     state,
     street,
     zipCode,
+    user_id,
   }: CreateLocationInput): Promise<LocationEntity> {
     const data = this.locationsRepository.create({
+      user_id,
       city,
       complement,
       neighborhood,

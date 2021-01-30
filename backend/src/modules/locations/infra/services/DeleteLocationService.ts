@@ -12,12 +12,21 @@ export default class DeleteLocationService {
     this.locationsRepository = locationsRepository;
   }
 
-  async execute(id: string): Promise<number> {
+  async execute(id: string, user_id: string): Promise<number> {
+    const location = await this.locationsRepository.findById(id);
+
+    if (!location) {
+      throw new AppError('A localização não existe.');
+    }
+
+    if (location.user_id !== user_id) {
+      throw new AppError(
+        'O usuário não tem permissão para deletar a localização.',
+        'UNAUTHENTICATED',
+      );
+    }
     const data = await this.locationsRepository.delete(id);
 
-    if (data) {
-      return data;
-    }
-    throw new AppError('Não foi possível deletar a localização');
+    return data;
   }
 }

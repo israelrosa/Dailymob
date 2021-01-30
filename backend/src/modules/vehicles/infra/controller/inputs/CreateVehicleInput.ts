@@ -1,8 +1,7 @@
 import { Field, InputType } from 'type-graphql';
-import VehicleEntity from '../../typeorm/entities/VehicleEntity';
 
 @InputType()
-export default class CreateVehicleInput implements Partial<VehicleEntity> {
+export default class CreateVehicleInput {
   @Field()
   name: string;
 
@@ -22,11 +21,17 @@ export default class CreateVehicleInput implements Partial<VehicleEntity> {
   monthly_value: number;
 
   @Field()
+  waiting_time: number;
+
+  @Field()
   category_id: string;
 
   @Field()
-  brand_id: string;
+  brand: string;
 
   @Field()
-  model_id: string;
+  model: string;
+
+  @Field()
+  location_id: string;
 }

@@ -3,6 +3,9 @@ import { Field, InputType } from 'type-graphql';
 @InputType()
 export default class CreateLocationInput {
   @Field()
+  user_id: string;
+
+  @Field()
   zipCode: string;
 
   @Field()

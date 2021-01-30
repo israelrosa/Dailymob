@@ -6,7 +6,7 @@ import AppError from '@shared/error/AppError';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 import UserEntity from '../typeorm/entities/UserEntity';
-import CreateSessionInterface from '../typeorm/inputs/CreateSessionInterface';
+import CreateSessionInterface from '../controller/inputs/CreateSessionInterface';
 
 @injectable()
 export default class CreateSessionToken {
@@ -36,7 +36,7 @@ export default class CreateSessionToken {
 
         return { user, token };
       }
-      throw new AppError('O usuário não existe.');
+      throw new AppError('Combinação Incorreta.');
     } else if (phone_number) {
       const user = await this.usersRepository.findByPhoneNumber(phone_number);
 
@@ -44,7 +44,7 @@ export default class CreateSessionToken {
         const token = await this.createToken(user, password);
         return { user, token };
       }
-      throw new AppError('O usuário não existe.');
+      throw new AppError('Combinação Incorreta.');
     } else if (username) {
       const user = await this.usersRepository.findByUsername(username);
 
@@ -52,7 +52,7 @@ export default class CreateSessionToken {
         const token = await this.createToken(user, password);
         return { user, token };
       }
-      throw new AppError('O usuário não existe.');
+      throw new AppError('Combinação Incorreta.');
     }
 
     throw new AppError('É necessário se identificar.');

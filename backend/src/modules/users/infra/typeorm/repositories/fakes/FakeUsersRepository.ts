@@ -1,7 +1,7 @@
 import IUsersRepository from '@modules/users/interfaces/IUsersRepository';
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 import UserEntity from '../../entities/UserEntity';
-import NewUserInterface from '../../inputs/NewUserInterface';
+import NewUserInterface from '../../../controller/inputs/NewUserInterface';
 
 export default class FakeUsersRepository implements IUsersRepository {
   private users: UserEntity[] = [];

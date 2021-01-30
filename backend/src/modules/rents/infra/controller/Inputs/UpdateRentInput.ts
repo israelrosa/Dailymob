@@ -13,14 +13,5 @@ export default class UpdateRentInput implements Partial<RentEntity> {
   return_date: Date;
 
   @Field()
-  vehicle_id: string;
-
-  @Field()
-  pickup_location_id: string;
-
-  @Field()
-  return_location_id: string;
-
-  @Field()
-  rent_type_id: string;
+  rent_status_id: string;
 }

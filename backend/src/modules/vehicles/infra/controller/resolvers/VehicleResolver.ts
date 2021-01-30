@@ -1,3 +1,5 @@
+import CreateCarInput from '@modules/vehicles/dependencies/cars/infra/controller/input/CreateCarInput';
+import CreateCarService from '@modules/vehicles/dependencies/cars/infra/services/CreateCarService';
 import UserContext from '@shared/auth/UserContext';
 import { container } from 'tsyringe';
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql';
@@ -13,37 +15,55 @@ import UpdateVehicleInput from '../inputs/UpdateVehicleInput';
 export default class VehicleResolver {
   @Authorized()
   @Mutation(() => VehicleEntity)
-  async newVehicle(
-    @Arg('data')
+  async newCar(
+    @Arg('vehicle')
     {
-      brand_id,
+      brand,
       category_id,
       description,
       diary_value,
-      model_id,
+      model,
       monthly_value,
       name,
       photo,
       weekly_value,
+      location_id,
+      waiting_time,
     }: CreateVehicleInput,
+    @Arg('car')
+    { air_bag, air_conditioning, capacity, doors, max_speed }: CreateCarInput,
     @Ctx() ctx: UserContext,
   ): Promise<VehicleEntity> {
     const createVehicle = container.resolve(CreateVehicleService);
+    const createCar = container.resolve(CreateCarService);
 
-    const data = await createVehicle.execute({
-      brand_id,
+    const dataVehicle = await createVehicle.execute({
+      brand,
       category_id,
       description,
+      location_id,
       diary_value,
-      model_id,
+      model,
       monthly_value,
       name,
       photo,
       user_id: ctx.id,
       weekly_value,
+      waiting_time,
     });
 
-    return data;
+    const dataCar = await createCar.execute({
+      air_bag,
+      air_conditioning,
+      capacity,
+      doors,
+      max_speed,
+      vehicle_id: dataVehicle.id,
+    });
+
+    dataVehicle.car = dataCar;
+
+    return dataVehicle;
   }
 
   @Authorized()
@@ -67,33 +87,37 @@ export default class VehicleResolver {
   async updateVehicle(
     @Arg('data')
     {
-      brand_id,
+      brand,
       category_id,
       description,
       weekly_value,
       diary_value,
       id,
-      model_id,
+      model,
       monthly_value,
       name,
       photo,
+      location_id,
+      waiting_time,
     }: UpdateVehicleInput,
     @Ctx() ctx: UserContext,
   ): Promise<VehicleEntity> {
     const updateVehicleService = container.resolve(UpdateVehicleService);
 
     const data = await updateVehicleService.execute({
-      brand_id,
+      brand,
       category_id,
       description,
       diary_value,
+      location_id,
       id,
-      model_id,
+      model,
       monthly_value,
       name,
       photo,
       user_id: ctx.id,
       weekly_value,
+      waiting_time,
     });
 
     return data;

@@ -15,24 +15,14 @@ export default class RentResolver {
   @Mutation(() => RentEntity)
   async newRent(
     @Arg('data')
-    {
-      initial_date,
-      pickup_location_id,
-      rent_type_id,
-      return_date,
-      return_location_id,
-      vehicle_id,
-    }: CreateRentInput,
+    { initial_date, return_date, vehicle_id }: CreateRentInput,
     @Ctx() ctx: UserContext,
   ): Promise<RentEntity> {
     const createRent = container.resolve(CreateRentService);
     const data = await createRent.execute({
       initial_date,
-      pickup_location_id,
-      rent_type_id,
       return_date,
-      return_location_id,
-      user_id: ctx.id,
+      renter_id: ctx.id,
       vehicle_id,
     });
 
@@ -58,27 +48,16 @@ export default class RentResolver {
   @Mutation(() => RentEntity)
   async updateRent(
     @Arg('data')
-    {
-      id,
-      initial_date,
-      pickup_location_id,
-      rent_type_id,
-      return_date,
-      return_location_id,
-      vehicle_id,
-    }: UpdateRentInput,
+    { id, initial_date, rent_status_id, return_date }: UpdateRentInput,
     @Ctx() ctx: UserContext,
   ): Promise<RentEntity> {
     const updateRentService = container.resolve(UpdateRentService);
     const data = await updateRentService.execute({
       id,
       initial_date,
-      pickup_location_id,
-      rent_type_id,
+      rent_status_id,
       return_date,
-      return_location_id,
-      user_id: ctx.id,
-      vehicle_id,
+      renter_id: ctx.id,
     });
 
     return data;
