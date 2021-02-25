@@ -6,7 +6,6 @@ This is a mobile app to rent vehicles and provide vehicles to rent, it will be m
 - [Apollo GraphQL](https://www.apollographql.com/docs/)
 - [Express](https://expressjs.com/pt-br/)
 - [Jest](https://jestjs.io/)
-- [Multer](https://www.npmjs.com/package/multer)
 - [Tsyringe](https://github.com/microsoft/tsyringe)
 - [React Native](https://reactnative.dev/)
 - [React Native Calendars](https://github.com/wix/react-native-calendars)
